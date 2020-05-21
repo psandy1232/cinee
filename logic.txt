@@ -1,0 +1,26 @@
+#if( Check Mobile number existed in members table ) 
+			/* Existed user */
+			#if( Check user is active)
+				#if( Check whether the user is blocked(for 24 hours) )
+					throw an error text message to user that he/she has blocked for 24 hours
+				#else
+					generate random number(OTP) and update the same in otp field in member table
+					#if(Check the user already completes registration with a flag in the same table)
+						//Redirect user to list of profiles page
+						redirect(profiles.html)
+					#else
+						//Get the data from member_profile table with existed record and show him 
+						#if(Record existed in member_profile page)
+							// Redirect user to Registration page and 
+							// get the data from the table and pre-populate in registration form
+						#else
+							// Redirect user to Registration page with empty fields
+						#end
+					#end	
+				#end
+			#else
+				throw an error message to user that his/her account has disabled. Please contact administrator
+			#end
+		#else
+			// Redirect user to Registration page with empty fields
+		#end
