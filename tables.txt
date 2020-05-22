@@ -1,0 +1,30 @@
+Billing Info Table
+	b_id
+	user_id
+	type
+	profile_id
+	name
+	email
+	mobile
+	address
+	amount
+	payment_ref_num (Generate 8 chars like 000000001)
+	payment_status (0 - Initiated, 1 - Success, 2 - Cancelled, 3 - Failed)
+	reason 
+	date_created
+	date_last_updated
+	created_by
+	updated_by
+
+Subscriptions
+	sub_id
+	b_id (Forign Key)
+	payment_ref_num (Forign Key)
+	amount
+	user_id (Forign Key)
+	type 
+	profile_id (Forign Key)
+	subscription_date
+	sub_status (1-active, 2-expired)
+	date_created
+	date_last_updated
