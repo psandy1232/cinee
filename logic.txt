@@ -1,39 +1,42 @@
-Login/Register Page:
-		#if( Check Mobile number existed in members table ) 
-			/* Existed user */
-			#if( Check user is active)
-				#if( Check whether the user is blocked(for 24 hours) )
-					throw an error text message to user that "You have blocked for 24 hours. Please contact administrator."
-				#else
-					generate random number(OTP) and update the same in otp field in member table
-					
-					/* OTP Scree Logic -- 
-					User get an OTP to his/her registered mobile number. And he types OTP and clicks Submit OTP button */
-					
-					#if(Check entered OTP is Valid && Check diff b/w current time and last updated time of OTP is <= 10 mins)
-						#if(Check the user already completes registration with a flag in the same table)
-							Redirect user to list of profiles page
-							redirect(profiles.html)
-						#else
-							//Get the data from member_profile table with existed record and show him 
-							#if(Record existed in member_profile page)
-								// Redirect user to Registration page and 
-								// get the data from the table and pre-populate in registration form
-							#else
-								// Redirect user to Registration page with empty fields
-							#end
-						#end
-					#else if(Check diff b/w current time and last updated time of OTP is > 10 mins)
-						//Redirect user to Login with OTP page and show him a error text message like "Entered OTP has expired. Please try again."
-					#else
-						//Throw an error message text message to user that "Invalid OTP entered".
-					#end
-					
-				#end
-			#else
-				throw an error message to user that his/her account has disabled. Please contact administrator
-			#end
+#if( Check Mobile number existed in members table ) 
+/* Existed user */
+#if( Check user is active)
+	#if( Check whether the user is blocked(for 2 hours) )
+		#if(Check diff b/w current time and his last udpated time > 2 hours)
+			Unblock user and continue to Unblock User else block below
 		#else
-			/* New User */
-			// Redirect user to Registration page with empty fields
+			throw an error text message to user that "You have blocked for 24 hours. Please contact administrator."
 		#end
+	#else (Unblock User)
+		generate random number(OTP) and update the same in otp field in member table
+
+		/* OTP Scree Logic -- 
+		User get an OTP to his/her registered mobile number. And he types OTP and clicks Submit OTP button */
+
+		#if(Check entered OTP is Valid && Check diff b/w current time and last updated time of OTP is <= 10 mins)
+			#if(Check the user already completes registration with a flag in the same table)
+				Redirect user to list of profiles page
+				redirect(profiles.html)
+			#else
+				//Get the data from member_profile table with existed record and show him 
+				#if(Record existed in member_profile page)
+					// Redirect user to Registration page and 
+					// get the data from the table and pre-populate in registration form
+				#else
+					// Redirect user to Registration page with empty fields
+				#end
+			#end
+		#else if(Check diff b/w current time and last updated time of OTP is > 10 mins)
+			//Redirect user to Login with OTP page and show him a error text message like "Entered OTP has expired. Please try again."
+		#else
+			//Throw an error message text message to user that "Invalid OTP entered".
+		#end
+
+	#end
+#else
+	throw an error message to user that his/her account has disabled. Please contact administrator
+#end
+#else
+/* New User */
+// Redirect user to Registration page with empty fields
+#end
